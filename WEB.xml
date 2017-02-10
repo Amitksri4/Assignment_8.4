@@ -1,0 +1,14 @@
+<%-- /WEB-INF/tags/simpletag.tag --%>
+<%@ attribute name="x" %>
+<%@ attribute name="y" %>
+<%@ attribute name="nonfragment" %>
+<%@ attribute name="frag" fragment="true" %>
+<%@ variable name-given="var1" scope="AT_BEGIN" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+Some template text.
+<c:set var="var1" value="${x+y}"/>
+<jsp:invoke fragment="frag" varReader="var1"/>
+
+Invoke the body:
+<jsp:doBody/>

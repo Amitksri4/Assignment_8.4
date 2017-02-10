@@ -1,0 +1,90 @@
+
+MySimpleTag _jsp_mySimpleTag = new MySimpleTag();
+
+_jsp_mySimpleTag.setJspContext( jspContext );
+
+_jsp.mySimpleTag.setX( "10" );
+
+out = ((PageContext)jspContext).pushBody();
+out.write( "20" );
+_jsp_mySimpleTag.setY( 
+    ((javax.servlet.jsp.tagext.BodyContent)out).getString() );
+out = jspContext.popBody();
+  Non..."
+out = ((PageContext)jspContext).pushBody();
+out.write( "Nonfragment Template Text" );
+_jsp_mySimpleTag.setNonfragment( 
+    ((javax.servlet.jsp.tagext.BodyContent)out).getString() );
+out = jspContext.popBody();
+
+_jsp_mySimpleTag.setFrag(
+      new JspFragmentBase( jspContext, _jsp_mySimpleTag ) {
+        public void invoke( java.io.Writer writer ) {
+            javax.servlet.jsp.JspWriter out;
+           
+            if( out == null ) {
+                out = this.jspContext.getOut();
+            }
+            else {
+                out = this.jspContext.pushBody( writer );
+            }
+          
+            try {
+                out.write( "Fragment Template Text " );
+                out.write( jspContext.getExpressionEvaluator().evaluate(
+                    "${var1}",
+                    java.lang.String.class,
+                    vResolver, fMapper, "my" ) );
+            }
+            finally {
+               
+                if( writer != null ) {
+                    this.jspContext.popBody();
+                }
+            }
+
+           
+        }
+    } );
+// Step T.5 - Determine and set body of the tag
+// - body of tag
+_jsp_mySimpleTag.setJspBody(
+    // Step C.1 - New instance of fragment created
+    // Step C.2 - Store jspContext
+    // Step C.3 - Association with nearest enclosing Tag instance
+    new JspFragmentBase( jspContext, _jsp_mySimpleTag ) {
+        public void invoke( java.io.Writer writer ) {
+            javax.servlet.jsp.JspWriter out;
+            // Step F.1-F.3 done in tag file (see following example)
+            // Step F.4 - If writer provided, push body:
+            if( writer == null ) {
+                out = this.jspContext.getOut();
+            }
+            else {
+                out = this.jspContext.pushBody( writer );
+            }
+            // Step F.5 - Evaluate body of fragment:
+            try {
+                out.write(
+                    "Body of tag that defines an AT_BEGIN\n" +
+                    " scripting variable " );
+                out.write( jspContext.getExpressionEvaluator().evaluate(
+                    "${var1}",
+                    java.lang.String.class,
+                    vResolver, fMapper, "my" ) );
+                out.write( ".\n" );
+            }
+            finally {
+                // Step F.6 - Restore value of JspContext.getOut()
+                if( writer != null ) {
+                    this.jspContext.popBody();
+                }
+            }
+
+            // Step F.7-F.9 done in tag file (see following example)
+        }
+    } );
+
+_jsp_mySimpleTag.doTag();
+
+String var1 = (String)jspContext.findAttribute( "var1" );

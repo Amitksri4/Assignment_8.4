@@ -1,0 +1,15 @@
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
+
+<my:simpleTag x="10">
+    <jsp:attribute name="y">20</jsp:attribute>
+    <jsp:attribute name="nonfragment">
+        Nonfragment Template Text
+    </jsp:attribute>
+    <jsp:attribute name="frag">
+        Fragment Template Text ${var1}
+    </jsp:attribute>
+    <jsp:body>
+        Body of tag that defines an AT_BEGIN
+        scripting variable ${var1}.
+    </jsp:body>
+</my:simpleTag>
